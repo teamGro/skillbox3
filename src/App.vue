@@ -1,25 +1,54 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+ <ProductList v-bind:products="products"></ProductList>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import products from './data/products';
+import ProductList from './components/ProductList.vue';
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld,
+    ProductList,
+  },
+  name: 'App',
+  data() {
+    return {
+      products,
+    };
   },
 };
 </script>
 
-<style lang="stylus">
-#app
-  font-family Avenir, Helvetica, Arial, sans-serif
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  text-align center
-  color #2c3e50
-  margin-top 60px
+<style>
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  list-style: none;
+}
+
+.product-item {
+  width: calc(100% / 3 - 15px);
+  margin-bottom: 15px;
+}
+
+.product-item:not(:nth-child(3n)) {
+  margin-right: 15px;
+}
+
+.product-image-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.product-image {
+  width:100%;
+  max-height: 250px;
+  object-fit: contain;
+}
+
+.product-title {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
 </style>
