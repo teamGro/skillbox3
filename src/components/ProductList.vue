@@ -1,14 +1,14 @@
 <template>
-   <ul class="product-list">
+  <ul class="catalog__list">
     <ProductItem v-bind:products="products"></ProductItem>
   </ul>
 </template>
 
 <script>
-import ProductItem from './ProductItem.vue';
+import ProductItem from "./ProductItem.vue";
 
 export default {
-  props: ['products'],
+  props: ["products"],
   components: {
     ProductItem,
   },

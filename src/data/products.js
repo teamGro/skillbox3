@@ -2,7 +2,7 @@ const Products = [
   {
     title: 'Футбольные бутсы Predator Mutator 20.1 FG',
     price: '4 999,00',
-    image: '/img/predator_mutator.jpg',
+    image: '../assets/predator_mutator.jpg',
   },
   {
     title: 'Бутсы Adidas X 16.1 FG',
