@@ -49,14 +49,14 @@
 </template>
 
 <script>
-import products from "./data/products";
-import ProductList from "./components/ProductList.vue";
+import products from './data/products';
+import ProductList from './components/ProductList.vue';
 
 export default {
   components: {
     ProductList,
   },
-  name: "App",
+  name: 'App',
   data() {
     return {
       products,
@@ -65,10 +65,5 @@ export default {
 };
 </script>
 
-<style lang="less">
-.pagination {
-  &__link {
-    color: red;
-  }
-}
+<style>
 </style>
