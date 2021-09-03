@@ -5,10 +5,10 @@
 </template>
 
 <script>
-import ProductItem from "./ProductItem.vue";
+import ProductItem from './ProductItem.vue';
 
 export default {
-  props: ["products"],
+  props: ['products'],
   components: {
     ProductItem,
   },

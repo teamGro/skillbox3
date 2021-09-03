@@ -55,6 +55,6 @@
 
 <script>
 export default {
-  props: ["products"],
+  props: ['products'],
 };
 </script>
