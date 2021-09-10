@@ -277,13 +277,13 @@ export default {
     };
   },
   watch: {
-    priceFrom(value){
+    priceFrom(value) {
       this.currentPriceFrom = value;
     },
-    priceTo(value){
+    priceTo(value) {
       this.currentPriceTo = value;
     },
-    categoryId(value){
+    categoryId(value) {
       this.currentCategoryId = value;
     },
   },
@@ -293,12 +293,12 @@ export default {
     },
   },
   methods: {
-    submit(){
+    submit() {
       this.$emit('update:priceFrom', this.currentPriceFrom);
       this.$emit('update:priceTo', this.currentPriceTo);
       this.$emit('update:categoryId', this.currentCategoryId);
     },
-    reset(){
+    reset() {
       this.$emit('update:priceFrom', 0);
       this.$emit('update:priceTo', 0);
       this.$emit('update:categoryId', 0);

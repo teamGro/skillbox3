@@ -1,35 +1,53 @@
 <template>
   <ul class="catalog__pagination pagination">
-      <li class="pagination__item">
-        <a class="pagination__link pagination__link--arrow"
+    <li class="pagination__item">
+      <a
+        class="pagination__link pagination__link--arrow"
         v-bind:class='{"pagination__link--disabled": page == 1}'
-          aria-label="Предыдущая страница" v-on:click.prevent="paginateBack()">
-          <svg width="8" height="14" fill="currentColor">
-            <use xlink:href="#icon-arrow-left"></use>
-          </svg>
-        </a>
-      </li>
-      <li class="pagination__item" v-for="pageNumber in pages" v-bind:key="pageNumber">
-        <a href='#' class="pagination__link"
+        aria-label="Предыдущая страница"
+        v-on:click.prevent="paginateBack()"
+      >
+        <svg
+          width="8"
+          height="14"
+          fill="currentColor"
+        >
+          <use xlink:href="#icon-arrow-left"></use>
+        </svg>
+      </a>
+    </li>
+    <li
+      class="pagination__item"
+      v-for="pageNumber in pages"
+      v-bind:key="pageNumber"
+    >
+      <a
+        href='#'
+        class="pagination__link"
         v-bind:class="{'pagination__link--current': pageNumber === page}"
-        v-on:click.prevent="paginate(pageNumber)"
+        v-on:click="paginate(pageNumber)"
+      >
+        {{pageNumber}}
+      </a>
+    </li>
+    <li class="pagination__item">
+      <a
+        class="pagination__link pagination__link--arrow"
+        v-bind:class='{"pagination__link--disabled": page == pages}'
+        href="#"
+        aria-label="Следующая страница"
+        v-on:click.prevent="paginateForward()"
+      >
+        <svg
+          width="8"
+          height="14"
+          fill="currentColor"
         >
-          {{pageNumber}}
-          </a>
-      </li>
-      <li class="pagination__item">
-        <a
-          class="pagination__link pagination__link--arrow"
-          v-bind:class='{"pagination__link--disabled": page == pages}'
-          href="#"
-          aria-label="Следующая страница" v-on:click.prevent="paginateForward()"
-        >
-          <svg width="8" height="14" fill="currentColor">
-            <use xlink:href="#icon-arrow-right"></use>
-          </svg>
-        </a>
-      </li>
-    </ul>
+          <use xlink:href="#icon-arrow-right"></use>
+        </svg>
+      </a>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -46,7 +64,7 @@ export default {
   },
   methods: {
     paginate(page) {
-      return this.$emit('paginate1', page);
+      this.$emit('paginate', page);
     },
     paginateBack() {
       return this.$emit('paginateBack');

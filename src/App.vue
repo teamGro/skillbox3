@@ -6,21 +6,24 @@
     </div>
 
     <div class="content__catalog">
-      <ProductFilter
+      <!-- <ProductFilter
         :price-from.sync="filterPriceFrom"
         :price-to.sync="filterPriceTo"
-        :category-id.sync="filterCategoryId"/>
+        :category-id.sync="filterCategoryId"
+      /> -->
       <section class="catalog">
         <ProductList v-bind:products="products"></ProductList>
         <BasePagination
           v-bind:per-page="productsPerPage"
           v-bind:count="productsCount"
-          v-on:update:paginate="page = $event"
-          v-bind:page="page"
-          v-on:paginate1="paginate2($event)"
+          v-model="page"
           v-on:paginateBack="paginateBack()"
           v-on:paginateForward="paginateForward()"
         />
+        <!-- v-bind:page="page"
+          v-on:update:paginate="page = $event"
+          v-on:paginate1="paginate2($event)"
+         -->
       </section>
     </div>
   </main>
@@ -30,13 +33,13 @@
 import products from './data/products';
 import ProductList from './components/ProductList.vue';
 import BasePagination from './components/BasePagination.vue';
-import ProductFilter from './components/ProductFilter.vue';
+//  import ProductFilter from './components/ProductFilter.vue';
 
 export default {
   components: {
     ProductList,
     BasePagination,
-    ProductFilter,
+    // ProductFilter,
   },
   name: 'App',
   data() {
@@ -45,7 +48,7 @@ export default {
       productsPerPage: 3,
       filterPriceFrom: 0,
       filterPriceTo: 0,
-      filterCategoryId: 1,
+      filterCategoryId: 0,
     };
   },
   computed: {
