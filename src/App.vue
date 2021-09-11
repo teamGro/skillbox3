@@ -6,24 +6,18 @@
     </div>
 
     <div class="content__catalog">
-      <!-- <ProductFilter
-        :price-from.sync="filterPriceFrom"
-        :price-to.sync="filterPriceTo"
-        :category-id.sync="filterCategoryId"
-      /> -->
+      <ProductFilter
+        v-model:price-from="filterPriceFrom"
+        v-model:price-to="filterPriceTo"
+        v-model:category-id="filterCategoryId"
+      />
       <section class="catalog">
         <ProductList v-bind:products="products"></ProductList>
         <BasePagination
           v-bind:per-page="productsPerPage"
           v-bind:count="productsCount"
-          v-model="page"
-          v-on:paginateBack="paginateBack()"
-          v-on:paginateForward="paginateForward()"
+          v-model:page="page"
         />
-        <!-- v-bind:page="page"
-          v-on:update:paginate="page = $event"
-          v-on:paginate1="paginate2($event)"
-         -->
       </section>
     </div>
   </main>
@@ -33,13 +27,13 @@
 import products from './data/products';
 import ProductList from './components/ProductList.vue';
 import BasePagination from './components/BasePagination.vue';
-//  import ProductFilter from './components/ProductFilter.vue';
+import ProductFilter from './components/ProductFilter.vue';
 
 export default {
   components: {
     ProductList,
     BasePagination,
-    // ProductFilter,
+    ProductFilter,
   },
   name: 'App',
   data() {
@@ -78,21 +72,7 @@ export default {
       return filteredProducts;
     },
   },
-  methods: {
-    paginate2(page) {
-      this.page = page;
-    },
-    paginateBack() {
-      if (this.page === 1) return;
-      this.page -= 1;
-    },
-    paginateForward() {
-      if (this.page === Math.ceil(this.productsCount / this.productsPerPage)) {
-        return;
-      }
-      this.page += 1;
-    },
-  },
+  methods: {},
 };
 </script>
 

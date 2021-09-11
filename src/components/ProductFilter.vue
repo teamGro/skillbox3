@@ -39,7 +39,7 @@
                 name="category"
                 v-model.number="currentCategoryId"
               >
-                <option value="value1">Все категории</option>
+                <option value="0">Все категории</option>
                 <option
                 v-for="category in categories"
                 :value="category.id"
@@ -269,6 +269,7 @@ import categories from '../data/categories';
 
 export default {
   props: ['priceFrom', 'priceTo', 'categoryId'],
+  emits: ['update:priceFrom', 'update:priceTo', 'update:categoryId'],
   data() {
     return {
       currentPriceFrom: 0,
