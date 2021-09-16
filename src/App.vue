@@ -10,6 +10,7 @@
         v-model:price-from="filterPriceFrom"
         v-model:price-to="filterPriceTo"
         v-model:category-id="filterCategoryId"
+        v-model:product-color="filterColor"
       />
       <section class="catalog">
         <ProductList v-bind:products="products"></ProductList>
@@ -43,6 +44,7 @@ export default {
       filterPriceFrom: 0,
       filterPriceTo: 0,
       filterCategoryId: 0,
+      filterColor: '',
     };
   },
   computed: {
@@ -67,6 +69,16 @@ export default {
       if (this.filterCategoryId) {
         filteredProducts = filteredProducts
           .filter((product) => product.categoryId === this.filterCategoryId);
+      }
+
+      if (this.filterColor) {
+        const localArr = [];
+        filteredProducts.forEach((product) => {
+          if (product.colors.includes(this.filterColor)) {
+            localArr.push(product);
+          }
+        });
+        filteredProducts = localArr;
       }
 
       return filteredProducts;

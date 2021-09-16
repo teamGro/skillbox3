@@ -5,6 +5,7 @@ const Products = [
     title: 'Футбольные бутсы Predator Mutator 20.1 FG',
     price: 4999.00,
     image: '../assets/predator_mutator.jpg',
+    colors: ['#73B6EA', '#939393', '#FFF'],
   },
   {
     id: 2,
@@ -12,6 +13,7 @@ const Products = [
     title: 'Бутсы Adidas X 16.1 FG',
     price: 4999.00,
     image: '/img/adidasx16.jpeg',
+    colors: ['#73B6EA', '#FFBE15', '#8BE000'],
   },
   {
     id: 3,
@@ -19,6 +21,7 @@ const Products = [
     title: 'Бутсы Nike Mercurial Superfly 7 Academy MG',
     price: 4999.00,
     image: '/img/NI464AMHVWU6.jpg',
+    colors: ['#73B6EA', '#8BE000', '#FF6B00'],
   },
   {
     id: 4,
@@ -26,6 +29,7 @@ const Products = [
     title: 'Футбольные бутсы X 19.3 FG',
     price: 5499.00,
     image: '/img/Futbolnye_butsy_X_19.3_FG.jpg',
+    colors: ['#73B6EA', '#FFBE15', '#FFF'],
   },
   {
     id: 5,
@@ -33,6 +37,7 @@ const Products = [
     title: 'Бутсы Adidas Copa 19+ FG BB8087 SR',
     price: 13390.00,
     image: '/img/adidasCopa.jpeg',
+    colors: ['#73B6EA', '#939393', '#FF6B00'],
   },
   {
     id: 6,
@@ -40,6 +45,7 @@ const Products = [
     title: 'Футбольные бутсы Nike Jr. Mercurial Superfly 8 Pro FG',
     price: 4999.00,
     image: '/img/mercurial-superfly.jpeg',
+    colors: ['#73B6EA', '#FFBE15', '#FFF'],
   },
   {
     id: 7,
@@ -47,6 +53,7 @@ const Products = [
     title: 'Бутсы - купить в официальном интернет-магазине adidas Россия',
     price: 6699.00,
     image: '/img/400x248_natural.jpg',
+    colors: ['#73B6EA', '#FFBE15', '#8BE000'],
   },
   {
     id: 8,
@@ -54,6 +61,7 @@ const Products = [
     title: 'Футбольные бутсы Adidas X Ghosted 3 FG M FW6948 76654',
     price: 4999.00,
     image: '/img/jalgpalli-puutsad-adidas-x.jpg',
+    colors: ['#73B6EA', '#FF6B00', '#000'],
   },
   {
     id: 9,
@@ -61,6 +69,7 @@ const Products = [
     title: 'Бутсы футбольные Jögel Forza JSH1003',
     price: 1290.00,
     image: '/img/butsy_futbolnye_forza.png',
+    colors: ['#73B6EA', '#FF6B00', '#FFF'],
   },
   {
     id: 10,
@@ -68,6 +77,7 @@ const Products = [
     title: 'Бутсы GOLD HYPERVENOM PHANTOM III HARRY KANE ',
     price: 6190.00,
     image: '/img/xe09ZctRRZQ.jpg.970.webp',
+    colors: ['#73B6EA', '#FFBE15', '#000'],
   },
 ];
 
