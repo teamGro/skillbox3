@@ -6,7 +6,7 @@
           class="filter__form form"
           action="#"
           method="get"
-          @click.prevent="submit"
+
         >
           <fieldset class="form__block">
             <legend class="form__legend">Цена</legend>
@@ -249,7 +249,7 @@
 
           <button
             class="filter__submit button button--primery"
-            type="submit"
+            type="submit"  @click.prevent="submit"
           >
             Применить
           </button>
