@@ -185,8 +185,8 @@ import categories from '../data/categories';
 import colors from '../data/colors';
 
 export default {
-  props: ['priceFrom', 'priceTo', 'categoryId', 'productColor'],
-  emits: ['update:priceFrom', 'update:priceTo', 'update:categoryId', 'update:productColor'],
+  props: ['priceFrom', 'priceTo', 'categoryId', 'productColor', 'page'],
+  emits: ['update:priceFrom', 'update:priceTo', 'update:categoryId', 'update:productColor', 'upate:page'],
   data() {
     return {
       currentPriceFrom: 0,
@@ -229,6 +229,7 @@ export default {
       this.$emit('update:priceTo', 0);
       this.$emit('update:categoryId', 0);
       this.$emit('update:productColor', '');
+      this.$emit('update:page', 1);
     },
   },
 };

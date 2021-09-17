@@ -11,6 +11,7 @@
         v-model:price-to="filterPriceTo"
         v-model:category-id="filterCategoryId"
         v-model:product-color="filterColor"
+        v-model:page="page"
       />
       <section class="catalog">
         <ProductList v-bind:products="products"
