@@ -1,7 +1,8 @@
 <template>
   <li class="catalog__item">
     <a class="catalog__pic" href="#">
-      <img v-bind:src="product.image" v-bind:alt="product.title" />
+      <img v-bind:src="product.image" v-bind:alt="product.title"
+      @click.prevent="$emit('goToPage', 'product', {id: product.id})"/>
     </a>
 
     <h3 class="catalog__title">
@@ -9,7 +10,7 @@
         {{ product.title }}
       </a>
     </h3>
-    <span class="catalog__price"> {{ product.price }} ₽ </span>
+    <span class="catalog__price"> {{ formatPrice }} ₽ </span>
 
     <ul class="colors colors--black">
       <ProductColor v-for="color, key in product.colors" v-bind:color="color" v-bind:key="key"/>
@@ -19,6 +20,7 @@
 
 <script>
 import ProductColor from './ProductColor.vue';
+import formatNumber from '@/helpers/numberFormat';
 
 export default {
   components: {
@@ -30,5 +32,10 @@ export default {
     };
   },
   props: ['product'],
+  computed: {
+    formatPrice() {
+      return formatNumber(this.product.price);
+    },
+  },
 };
 </script>
