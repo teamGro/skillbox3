@@ -3,14 +3,14 @@
     <div class="content__top">
       <ul class="breadcrumbs">
         <li class="breadcrumbs__item">
-          <a class="breadcrumbs__link" href="index.html">
+          <router-link class="breadcrumbs__link" :to="{name: 'main'}">
             Каталог
-          </a>
+          </router-link>
         </li>
         <li class="breadcrumbs__item">
-          <a class="breadcrumbs__link" href="#">
+          <router-link class="breadcrumbs__link" :to="{name: 'main'}">
             {{ category.title }}
-          </a>
+          </router-link>
         </li>
         <li class="breadcrumbs__item">
           <a class="breadcrumbs__link">
@@ -133,22 +133,23 @@
 
             <div class="item__row">
               <div class="form__counter">
-                <button type="button" aria-label="Убрать один товар">
+                <button type="button" aria-label="Убрать один товар" @click="currentAmount--"
+                :disabled="(currentAmount === 0) ? true : false">
                   <svg width="12" height="12" fill="currentColor">
                     <use xlink:href="#icon-minus"></use>
                   </svg>
                 </button>
 
-                <input type="text" value="1" name="count">
+                <input type="text" v-model.number="currentAmount" name="count">
 
-                <button type="button" aria-label="Добавить один товар">
+                <button type="button" aria-label="Добавить один товар" @click="currentAmount++">
                   <svg width="12" height="12" fill="currentColor">
                     <use xlink:href="#icon-plus"></use>
                   </svg>
                 </button>
               </div>
 
-              <button class="button button--primery" type="submit">
+              <button class="button button--primery" @click.prevent="addToCart()">
                 В корзину
               </button>
             </div>
@@ -230,16 +231,25 @@ import categories from '@/data/categories';
 import formatNumber from '@/helpers/numberFormat';
 
 export default {
-  props: ['pageParams'],
+  data() {
+    return {
+      currentAmount: 1,
+    };
+  },
   computed: {
     product() {
-      return products.find((product) => product.id === this.pageParams.id);
+      return products.find((product) => product.id === +this.$route.params.id);
     },
     category() {
       return categories.find((category) => category.id === this.product.categoryId);
     },
     formatPrice() {
       return formatNumber(this.product.price);
+    },
+  },
+  methods: {
+    addToCart() {
+      this.$store.commit('addProductToCart', { productId: this.product.id, amount: this.currentAmount });
     },
   },
 };

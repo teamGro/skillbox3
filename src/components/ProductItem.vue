@@ -1,9 +1,8 @@
 <template>
   <li class="catalog__item">
-    <a class="catalog__pic" href="#">
-      <img v-bind:src="product.image" v-bind:alt="product.title"
-      @click.prevent="$emit('goToPage', 'product', {id: product.id})"/>
-    </a>
+    <router-link class="catalog__pic" :to="{name: 'product', params: {id: product.id}}">
+      <img v-bind:src="product.image" v-bind:alt="product.title"/>
+    </router-link>
 
     <h3 class="catalog__title">
       <a href="#">

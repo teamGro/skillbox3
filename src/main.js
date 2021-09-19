@@ -1,8 +1,6 @@
 import { createApp } from 'vue';
 import App from './App.vue';
-import { messageWorld, messageVue } from './homeTask_2/messages';
-import printMessage from './homeTask_2/func';
+import router from '@/router';
+import store from '@/store';
 
-createApp(App).mount('#app');
-printMessage(messageVue);
-printMessage(messageWorld);
+createApp(App).use(router).use(store).mount('#app');
