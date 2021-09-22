@@ -132,22 +132,9 @@
             </fieldset>
 
             <div class="item__row">
-              <div class="form__counter">
-                <button type="button" aria-label="Убрать один товар" @click="currentAmount--"
-                :disabled="(currentAmount === 0) ? true : false">
-                  <svg width="12" height="12" fill="currentColor">
-                    <use xlink:href="#icon-minus"></use>
-                  </svg>
-                </button>
+              <product-add-delete-item v-model:amount="currentAmount">
 
-                <input type="text" v-model.number="currentAmount" name="count">
-
-                <button type="button" aria-label="Добавить один товар" @click="currentAmount++">
-                  <svg width="12" height="12" fill="currentColor">
-                    <use xlink:href="#icon-plus"></use>
-                  </svg>
-                </button>
-              </div>
+              </product-add-delete-item>
 
               <button class="button button--primery" @click.prevent="addToCart()">
                 В корзину
@@ -229,8 +216,10 @@
 import products from '@/data/products';
 import categories from '@/data/categories';
 import formatNumber from '@/helpers/numberFormat';
+import ProductAddDeleteItem from '@/components/ProductAddDeleteItem.vue';
 
 export default {
+  components: { ProductAddDeleteItem },
   data() {
     return {
       currentAmount: 1,

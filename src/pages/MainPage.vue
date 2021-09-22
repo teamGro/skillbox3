@@ -14,8 +14,7 @@
         v-model:page="page"
       />
       <section class="catalog">
-        <ProductList v-bind:products="products"
-         @go-to-page="(pageName, pageParams) => $emit('goToPage', pageName, pageParams)">
+        <ProductList v-bind:products="products">
          </ProductList>
         <BasePagination
           v-bind:per-page="productsPerPage"
