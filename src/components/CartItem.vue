@@ -11,15 +11,16 @@
               </span>
 
               <div class="product__counter form__counter">
-                <button type="button" aria-label="Убрать один товар">
+                <button type="button" aria-label="Убрать один товар" @click="deleteItem()"
+                :disabled="amount === 0">
                   <svg width="10" height="10" fill="currentColor">
                     <use xlink:href="#icon-minus"></use>
                   </svg>
                 </button>
 
-                <input type="text" v-model="amount" name="count">
+                <input type="text" v-model.number="amount" name="count">
 
-                <button type="button" aria-label="Добавить один товар">
+                <button type="button" aria-label="Добавить один товар" @click="addItem()">
                   <svg width="10" height="10" fill="currentColor">
                     <use xlink:href="#icon-plus"></use>
                   </svg>
@@ -61,9 +62,18 @@ export default {
   },
   methods: {
     ...mapMutations({ deleteProduct: 'deleteProductFromCart' }),
-    // deleteProduct() {
-    //   this.$store.commit('deleteProductFromCart', this.item.productId);
-    // },
+    addItem() {
+      this.$store.commit('updateProductAmount', { productId: this.item.productId, amount: this.amount + 1 });
+    },
+    deleteItem() {
+      this.$store.commit('updateProductAmount', { productId: this.item.productId, amount: this.amount - 1 });
+    },
   },
 };
 </script>
+
+<style scoped>
+  button {
+    cursor: pointer;
+  }
+</style>
