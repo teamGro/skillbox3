@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { createStore } from 'vuex';
 import products from '@/data/products';
 
@@ -31,20 +30,21 @@ const store = createStore({
       }
     },
     deleteProductFromCart(state, productId) {
-      state.cartProducts = state.cartProducts.filter((item) => item.productId != productId);
-    }
+      state.cartProducts = state.cartProducts.filter((item) => item.productId !== productId);
+    },
   },
   getters: {
     cartDetailProducts(state) {
-      return state.cartProducts.map((item) => {
-        return {
+      return state.cartProducts.map((item) => (
+        {
           ...item,
           product: products.find((product) => product.id === item.productId),
-        };
-      });
+        }));
     },
     cartTotalPrice(state, getters) {
-      return getters.cartDetailProducts.reduce((acc, item) => item.product.price * item.amount + acc, 0);
+      return getters.cartDetailProducts.reduce((acc, item) => (
+        item.product.price * item.amount + acc
+      ), 0);
     },
   },
 });
