@@ -27,7 +27,8 @@
 </template>
 
 <script>
-import products from '@/data/products';
+import axios from 'axios';
+import API_BASE_URL from '@/config';
 import ProductList from '@/components/ProductList.vue';
 import BasePagination from '@/components/BasePagination.vue';
 import ProductFilter from '@/components/ProductFilter.vue';
@@ -42,22 +43,29 @@ export default {
     return {
       page: 1,
       productsPerPage: 3,
+
       filterPriceFrom: 0,
       filterPriceTo: 0,
       filterCategoryId: 0,
       filterColor: '',
+
+      productsData: null,
     };
   },
   computed: {
     products() {
-      const offset = (this.page - 1) * this.productsPerPage;
-      return this.filteredProducts.slice(offset, offset + this.productsPerPage);
+      return this.productsData ? this.productsData.items.map((product) => (
+        {
+          ...product,
+          image: product.image.file.url,
+        }
+      )) : [];
     },
     productsCount() {
-      return this.filteredProducts.length;
+      return this.productsData ? this.productsData.pagination.total : 0;
     },
     filteredProducts() {
-      let filteredProducts = products;
+      let filteredProducts = this.products;
       if (this.filterPriceFrom > 0) {
         filteredProducts = filteredProducts
           .filter((product) => product.price > this.filterPriceFrom);
@@ -85,6 +93,39 @@ export default {
       return filteredProducts;
     },
   },
-  methods: {},
+  watch: {
+    page() {
+      this.loadProducts();
+    },
+    filterCategoryId() {
+      this.loadProducts();
+    },
+    filterPriceFrom() {
+      this.loadProducts();
+    },
+    filterPriceTo() {
+      this.loadProducts();
+    },
+  },
+  methods: {
+    loadProducts() {
+      clearTimeout(this.loadProductsTimer);
+      this.loadProductsTimer = setTimeout(() => {
+        axios.get(`${API_BASE_URL}/api/products`, {
+          params: {
+            page: this.page,
+            limit: this.productsPerPage,
+            categoryId: this.filterCategoryId,
+            minPrice: this.filterPriceFrom,
+            maxPrice: this.filterPriceTo,
+          },
+        })
+          .then((response) => { this.productsData = response.data; });
+      }, 0);
+    },
+  },
+  created() {
+    this.loadProducts();
+  },
 };
 </script>
