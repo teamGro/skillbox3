@@ -2,7 +2,7 @@
   <main class="content container">
     <div class="content__top content__top--catalog">
       <h1 class="content__title">Каталог</h1>
-      <span class="content__info"> 152 товара </span>
+      <span class="content__info"> {{ productsCount }} товара </span>
     </div>
 
     <div class="content__catalog">
@@ -10,11 +10,24 @@
         v-model:price-from="filterPriceFrom"
         v-model:price-to="filterPriceTo"
         v-model:category-id="filterCategoryId"
-        v-model:product-color="filterColor"
+        v-model:product-color="filterColorId"
         v-model:page="page"
       />
       <section class="catalog">
-        <ProductList v-bind:products="products">
+        <div  class='sk-wave' v-if="loadingProducts">
+          <div class='sk-rect sk-rect-1'></div>
+          <div class='sk-rect sk-rect-2'></div>
+          <div class='sk-rect sk-rect-3'></div>
+          <div class='sk-rect sk-rect-4'></div>
+          <div class='sk-rect sk-rect-5'></div>
+        </div>
+
+        <div v-else-if="loadingProductsFail">
+          Произошла ошибка
+          <button @click="loadProducts">Попробовать ещё раз</button>
+        </div>
+
+        <ProductList v-else v-bind:products="products">
          </ProductList>
         <BasePagination
           v-bind:per-page="productsPerPage"
@@ -47,9 +60,12 @@ export default {
       filterPriceFrom: 0,
       filterPriceTo: 0,
       filterCategoryId: 0,
-      filterColor: '',
+      filterColorId: 0,
 
       productsData: null,
+
+      loadingProducts: false,
+      loadingProductsFail: false,
     };
   },
   computed: {
@@ -80,10 +96,10 @@ export default {
           .filter((product) => product.categoryId === this.filterCategoryId);
       }
 
-      if (this.filterColor) {
+      if (this.filterColorId) {
         const localArr = [];
         filteredProducts.forEach((product) => {
-          if (product.colors.includes(this.filterColor)) {
+          if (product.colors.includes(this.filterColorId)) {
             localArr.push(product);
           }
         });
@@ -106,9 +122,15 @@ export default {
     filterPriceTo() {
       this.loadProducts();
     },
+    filterColorId() {
+      this.loadProducts();
+    },
   },
   methods: {
     loadProducts() {
+      this.loadingProducts = true;
+      this.loadingProductsFail = false;
+
       clearTimeout(this.loadProductsTimer);
       this.loadProductsTimer = setTimeout(() => {
         axios.get(`${API_BASE_URL}/api/products`, {
@@ -118,10 +140,13 @@ export default {
             categoryId: this.filterCategoryId,
             minPrice: this.filterPriceFrom,
             maxPrice: this.filterPriceTo,
+            colorId: this.filterColorId,
           },
         })
-          .then((response) => { this.productsData = response.data; });
-      }, 0);
+          .then((response) => { this.productsData = response.data; })
+          .catch(() => { this.loadingProductsFail = true; })
+          .then(() => { this.loadingProducts = false; });
+      }, 2000);
     },
   },
   created() {
@@ -129,3 +154,52 @@ export default {
   },
 };
 </script>
+
+<style>
+  .sk-wave {
+    display: flex;
+    justify-content: space-between;
+    width: 6em;
+    height: 4em;
+    margin: auto;
+    text-align: center;
+    font-size: 1em;
+  }
+
+  .sk-wave .sk-rect {
+    background-color: #337ab7;
+    height: 100%;
+    width: 0.5em;
+    display: inline-block;
+    animation: sk-wave-stretch-delay 1.2s infinite ease-in-out;
+  }
+
+  .sk-wave .sk-rect-1 {
+    animation-delay: -1.2s;
+  }
+
+  .sk-wave .sk-rect-2 {
+    animation-delay: -1.1s;
+  }
+
+  .sk-wave .sk-rect-3 {
+    animation-delay: -1s;
+  }
+
+  .sk-wave .sk-rect-4 {
+    animation-delay: -0.9s;
+  }
+
+  .sk-wave .sk-rect-5 {
+    animation-delay: -0.8s;
+  }
+
+  @keyframes sk-wave-stretch-delay {
+    0%, 40%, 100% {
+      transform: scaleY(0.4);
+    }
+    20% {
+      transform: scaleY(1);
+    }
+  }
+</style>

@@ -1,5 +1,9 @@
 <template>
-    <main class="content container">
+    <main class="content container" v-if="loadingProduct">Загрузка товара...</main>
+    <main class="content container" v-else-if="loadingProductFailed">
+      Ошибка при загрузке товара
+    </main>
+    <main class="content container" v-else>
     <div class="content__top">
       <ul class="breadcrumbs">
         <li class="breadcrumbs__item">
@@ -24,7 +28,7 @@
       <div class="item__pics pics">
         <div class="pics__wrapper">
           <img width="570" height="570"
-          :src="product.image"
+          :src="product.image.file.url"
            :alt="product.title">
         </div>
         <ul class="pics__list">
@@ -136,9 +140,15 @@
 
               </product-add-delete-item>
 
-              <button class="button button--primery" @click.prevent="addToCart()">
+              <button
+                class="button button--primery"
+                @click.prevent="addToCart()"
+                :disabled="productAddingToCart">
                 В корзину
               </button>
+
+              <div v-show="productAddingToCart">Товар добавляется ...</div>
+              <div v-show="productAddedToCart">Товар добавлен</div>
             </div>
           </form>
         </div>
@@ -213,8 +223,9 @@
 </template>
 
 <script>
-import products from '@/data/products';
-import categories from '@/data/categories';
+import axios from 'axios';
+import { mapActions } from 'vuex';
+import API_BASE_URL from '@/config';
 import formatNumber from '@/helpers/numberFormat';
 import ProductAddDeleteItem from '@/components/ProductAddDeleteItem.vue';
 
@@ -223,23 +234,57 @@ export default {
   data() {
     return {
       currentAmount: 1,
+      productData: null,
+
+      loadingProduct: false,
+      loadingProductFailed: false,
+
+      productAddingToCart: false,
+      productAddedToCart: false,
     };
   },
   computed: {
     product() {
-      return products.find((product) => product.id === +this.$route.params.id);
+      return this.productData;
     },
     category() {
-      return categories.find((category) => category.id === this.product.categoryId);
+      return this.productData.category;
     },
     formatPrice() {
-      return formatNumber(this.product.price);
+      return formatNumber(this.product.price * this.currentAmount);
     },
   },
   methods: {
+    ...mapActions(['addProductToCart']),
     addToCart() {
-      this.$store.commit('addProductToCart', { productId: this.product.id, amount: this.currentAmount });
+      this.productAddedToCart = false;
+      this.productAddingToCart = true;
+
+      this.addProductToCart({ productId: this.product.id, amount: this.currentAmount })
+        .then(() => {
+          this.productAddedToCart = true;
+          this.productAddingToCart = false;
+        });
     },
+    loadProduct() {
+      this.loadingProduct = true;
+      this.loadingProductFailed = false;
+      clearTimeout(this.productTimer);
+      this.productTimer = setTimeout(() => {
+        axios.get(`${API_BASE_URL}/api/products/${this.$route.params.id}`)
+          .then((response) => { this.productData = response.data; })
+          .catch(() => { this.loadingProductFailed = true; })
+          .then(() => { this.loadingProduct = false; });
+      });
+    },
+  },
+  watch: {
+    '$route.params.id': function () {
+      this.loadProduct();
+    },
+  },
+  created() {
+    this.loadProduct();
   },
 };
 </script>

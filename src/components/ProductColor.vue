@@ -4,10 +4,9 @@
           <input
             class="colors__radio sr-only"
             type="radio"
-            v-bind:value="color"
+            v-bind:value="color.id"
           />
-            <!-- v-model="color" -->
-          <span class="colors__value" v-bind:style="{'background-color': color}"> </span>
+          <span class="colors__value" v-bind:style="{'background-color': color.code}"> </span>
         </label>
       </li>
 </template>
