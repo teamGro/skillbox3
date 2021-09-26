@@ -150,7 +150,11 @@ export default {
     },
   },
   created() {
-    this.loadProducts();
+    if (this.productsData?.length) {
+      return true;
+    }
+
+    return this.loadProducts();
   },
 };
 </script>

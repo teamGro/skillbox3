@@ -47,6 +47,7 @@
           </p>
 
           <router-link
+            v-if="products.length"
             class="cart__button button button--primery"
             type="submit"
             tag="button"

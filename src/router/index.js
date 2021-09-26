@@ -4,6 +4,7 @@ import NotFoundPage from '@/pages/NotFoundPage.vue';
 import ProductPage from '@/pages/ProductPage.vue';
 import CartPage from '@/pages/CartPage.vue';
 import OrderPage from '@/pages/OrderPage.vue';
+import OrderInfo from '@/pages/OrderInfo.vue';
 
 const history = createWebHashHistory();
 const routes = [
@@ -26,6 +27,11 @@ const routes = [
     name: 'order',
     path: '/order',
     component: OrderPage,
+  },
+  {
+    name: 'orderInfo',
+    path: '/order/info/:id',
+    component: OrderInfo,
   },
   {
     name: 'notFound',

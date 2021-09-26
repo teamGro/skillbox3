@@ -8,9 +8,17 @@ const store = createStore({
       cartProducts: [],
       userAccessKey: null,
       cartProductsData: [],
+      orderInfo: null,
     };
   },
   mutations: {
+    orderInfo(state, orderInfo) {
+      state.orderInfo = orderInfo;
+    },
+    resetCart(state) {
+      state.cartProducts = [];
+      state.cartProductsData = [];
+    },
     addProductToCart(state, { productId, amount }) {
       const product = state.cartProducts.find((item) => item.productId === productId);
 
@@ -20,13 +28,6 @@ const store = createStore({
         state.cartProducts.push({ productId, amount });
       }
     },
-    // updateProductAmount(state, { productId, amount }) {
-    //   const product = state.cartProducts.find((item) => item.productId === productId);
-
-    //   if (product) {
-    //     product.amount = amount;
-    //   }
-    // },
     updateUserAccessKey(state, userAccessKey) {
       state.userAccessKey = userAccessKey;
     },
@@ -67,8 +68,27 @@ const store = createStore({
     cartTotalProducts(state) {
       return state.cartProducts.length;
     },
+    cartTotalAmount(state) {
+      return state.cartProducts.reduce((sum, curent) => (curent.amount + sum), 0);
+    },
+    orderTotalAmount(state) {
+      if (state.orderInfo) {
+        return state.orderInfo.basket.items.reduce((sum, current) => (current.quantity + sum), 0);
+      }
+      return false;
+    },
   },
   actions: {
+    loadOrderInfo(context, orderId) {
+      return axios.get(`${API_BASE_URL}/api/orders/${orderId}`, {
+        params: {
+          userAccessKey: context.state.userAccessKey,
+        },
+      })
+        .then((response) => {
+          context.commit('orderInfo', response.data);
+        });
+    },
     loadCart(context) {
       return axios.get(`${API_BASE_URL}/api/baskets`, {
         params: {
