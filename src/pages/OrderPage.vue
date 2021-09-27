@@ -46,7 +46,7 @@
               :error="formError.name"
               type="text"
               name="name"
-              placeholder="Введите ваше полное имя"
+              placeholder="Иванов Иван Иванович"
               v-model:fieldValue="formData.name">
             </base-form-field-text>
 
