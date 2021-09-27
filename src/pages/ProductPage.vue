@@ -278,10 +278,8 @@ export default {
       });
     },
   },
-  watch: {
-    '$route.params.id': function () {
-      this.loadProduct();
-    },
+  beforeRouteUpdated() {
+    this.loadProduct();
   },
   created() {
     this.loadProduct();
