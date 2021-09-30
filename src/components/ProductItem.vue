@@ -1,5 +1,5 @@
 <template>
-  <li class="catalog__item">
+  <li v-for="product in normalizedProducts" v-bind:key='product.id' v-bind="$attrs">
     <router-link class="catalog__pic" :to="{name: 'product', params: {id: product.id}}">
       <img v-bind:src="product.image" v-bind:alt="product.title"/>
     </router-link>
@@ -9,7 +9,7 @@
         {{ product.title }}
       </a>
     </h3>
-    <span class="catalog__price"> {{ formatPrice }} ₽ </span>
+    <span class="catalog__price"> {{ product.prettyPrice }} ₽ </span>
 
     <ul class="colors colors--black">
       <ProductColor v-for="color, key in product.colors" v-bind:color="color" v-bind:key="key"/>
@@ -30,11 +30,19 @@ export default {
       color: '#73b6ea',
     };
   },
-  props: ['product'],
+  props: ['products'],
   computed: {
-    formatPrice() {
-      return formatNumber(this.product.price);
+    normalizedProducts() {
+      return this.products.map((product) => (
+        {
+          ...product,
+          prettyPrice: formatNumber(product.price),
+        }
+      ));
     },
+    // formatPrice() {
+    //   return formatNumber(this.product.price);
+    // },
   },
 };
 </script>
