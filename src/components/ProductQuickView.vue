@@ -1,9 +1,9 @@
 <template>
-    <main class="content container" v-if="loadingProduct">Загрузка товара...</main>
-    <main class="content container" v-else-if="loadingProductFailed">
+    <div v-if="loadingProduct">Загрузка товара...</div>
+    <div v-else-if="loadingProductFailed">
       Ошибка при загрузке товара
-    </main>
-    <main class="content container" v-else>
+    </div>
+    <div v-else>
     <div class="content__top">
       <ul class="breadcrumbs">
         <li class="breadcrumbs__item">
@@ -219,7 +219,7 @@
         </div>
       </div>
     </section>
-  </main>
+  </div>
 </template>
 
 <script>
@@ -230,6 +230,12 @@ import formatNumber from '@/helpers/numberFormat';
 import ProductAddDeleteItem from '@/components/ProductAddDeleteItem.vue';
 
 export default {
+  props: {
+    productId: {
+      type: [Number, String],
+      required: true,
+    },
+  },
   components: { ProductAddDeleteItem },
   data() {
     return {
@@ -272,7 +278,7 @@ export default {
       this.loadingProductFailed = false;
       clearTimeout(this.productTimer);
       this.productTimer = setTimeout(() => {
-        axios.get(`${API_BASE_URL}/api/products/${this.$route.params.id}`)
+        axios.get(`${API_BASE_URL}/api/products/${this.productId}`)
           .then((response) => { this.productData = response.data; })
           .catch(() => { this.loadingProductFailed = true; })
           .then(() => { this.loadingProduct = false; });
@@ -287,3 +293,15 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+  .item {
+    grid-template-columns: 1fr;
+  }
+
+  .pics__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
