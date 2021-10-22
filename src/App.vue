@@ -4,7 +4,7 @@
 
     <header-element></header-element>
 
-    <router-view/>
+    <router-view :key="$route.fullPath" />
 
     <footer-element></footer-element>
   </div>
@@ -33,7 +33,7 @@ export default {
 </script>
 
 <style>
-  #teleoport-target {
-    position: relative;
-  }
+#teleoport-target {
+  position: relative;
+}
 </style>
