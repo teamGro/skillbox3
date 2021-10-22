@@ -1,8 +1,10 @@
 <template>
   <div>
+    <div id="teleport-target"></div>
+
     <header-element></header-element>
 
-    <router-view />
+    <router-view/>
 
     <footer-element></footer-element>
   </div>
@@ -29,3 +31,9 @@ export default {
   },
 };
 </script>
+
+<style>
+  #teleoport-target {
+    position: relative;
+  }
+</style>

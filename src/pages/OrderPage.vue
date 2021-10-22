@@ -196,7 +196,6 @@ export default {
         },
       })
         .then((response) => {
-          console.log(response);
           this.$store.commit('orderInfo');
           this.$store.commit('resetCart');
           this.$router.push({ name: 'orderInfo', params: { id: response.data.id } });
