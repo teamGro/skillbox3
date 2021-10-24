@@ -345,7 +345,8 @@ export default defineComponent({
       productAddedToCart.value = false;
       productAddingToCart.value = true;
 
-      $store.dispatch('addProductToCart', { productId: product.value.id, amount: currentAmount.value })
+      $store
+        .dispatch('addProductToCart', { productId: product.value.id, amount: currentAmount.value })
         .then(() => {
           productAddedToCart.value = true;
           productAddingToCart.value = false;
@@ -353,7 +354,6 @@ export default defineComponent({
         });
     };
 
-    // doLoadProduct();
     fetchProduct($route.params.id);
 
     return {
@@ -367,68 +367,7 @@ export default defineComponent({
       category,
 
       doAddToCart,
-
     };
   },
 });
-
-// export default {
-//   components: { ProductAddDeleteItem },
-//   data() {
-//     return {
-//       currentAmount: 1,
-//       productData: null,
-
-//       loadingProduct: false,
-//       loadingProductFailed: false,
-
-//       productAddingToCart: false,
-//       productAddedToCart: false,
-
-//       isShowAddedMessage: false,
-//     };
-//   },
-//   computed: {
-//     product() {
-//       return this.productData;
-//     },
-//     category() {
-//       return this.productData.category;
-//     },
-//     formatPrice() {
-//       return formatNumber(this.product.price * this.currentAmount);
-//     },
-//   },
-//   methods: {
-//     ...mapActions(['addProductToCart']),
-//     addToCart() {
-//       this.productAddedToCart = false;
-//       this.productAddingToCart = true;
-
-//       this.addProductToCart({ productId: this.product.id, amount: this.currentAmount })
-//         .then(() => {
-//           this.productAddedToCart = true;
-//           this.productAddingToCart = false;
-//           this.isModalShown = true;
-//         });
-//     },
-//     loadProduct() {
-//       this.loadingProduct = true;
-//       this.loadingProductFailed = false;
-//       clearTimeout(this.productTimer);
-//       this.productTimer = setTimeout(() => {
-//         axios.get(`${API_BASE_URL}/api/products/${this.$route.params.id}`)
-//           .then((response) => { this.productData = response.data; })
-//           .catch(() => { this.loadingProductFailed = true; })
-//           .then(() => { this.loadingProduct = false; });
-//       });
-//     },
-//   },
-//   beforeRouteUpdated() {
-//     this.loadProduct();
-//   },
-//   created() {
-//     this.loadProduct();
-//   },
-// };
 </script>

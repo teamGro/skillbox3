@@ -1,11 +1,11 @@
 <template>
-    <div v-if="loadingProduct">Загрузка товара...</div>
-    <div v-else-if="loadingProductFailed">
-      Ошибка при загрузке товара
-    </div>
-    <div v-else>
+  <div v-if="productStatus.isLoading">Загрузка товара...</div>
+  <div v-else-if="productStatus.isFailed">
+    Ошибка при загрузке товара
+  </div>
+  <div v-else>
     <div class="content__top">
-      <ul class="breadcrumbs">
+      <!-- <ul class="breadcrumbs">
         <li class="breadcrumbs__item">
           <router-link class="breadcrumbs__link" :to="{name: 'main'}">
             Каталог
@@ -21,43 +21,74 @@
             {{ product.title }}
           </a>
         </li>
-      </ul>
+      </ul> -->
     </div>
 
     <section class="item">
       <div class="item__pics pics">
         <div class="pics__wrapper">
-          <img width="570" height="570"
-          :src="product.image.file.url"
-           :alt="product.title">
+          <img
+            width="570"
+            height="570"
+            :src="product.image.file.url"
+            :alt="product.title"
+          >
         </div>
         <ul class="pics__list">
           <li class="pics__item">
-            <a href="" class="pics__link pics__link--current">
-              <img width="98" height="98"
-              src="img/phone-square-1.jpg"
-              srcset="img/phone-square-1@2x.jpg 2x" alt="Название товара">
+            <a
+              href=""
+              class="pics__link pics__link--current"
+            >
+              <img
+                width="98"
+                height="98"
+                src="img/phone-square-1.jpg"
+                srcset="img/phone-square-1@2x.jpg 2x"
+                alt="Название товара"
+              >
             </a>
           </li>
           <li class="pics__item">
-            <a href="" class="pics__link">
-              <img width="98" height="98"
-              src="img/phone-square-2.jpg"
-              srcset="img/phone-square-2@2x.jpg 2x" alt="Название товара">
+            <a
+              href=""
+              class="pics__link"
+            >
+              <img
+                width="98"
+                height="98"
+                src="img/phone-square-2.jpg"
+                srcset="img/phone-square-2@2x.jpg 2x"
+                alt="Название товара"
+              >
             </a>
           </li>
           <li class="pics__item">
-            <a href="" class="pics__link">
-              <img width="98" height="98"
-              src="img/phone-square-3.jpg"
-              srcset="img/phone-square-3@2x.jpg 2x" alt="Название товара">
+            <a
+              href=""
+              class="pics__link"
+            >
+              <img
+                width="98"
+                height="98"
+                src="img/phone-square-3.jpg"
+                srcset="img/phone-square-3@2x.jpg 2x"
+                alt="Название товара"
+              >
             </a>
           </li>
           <li class="pics__item">
-            <a class="pics__link" href="#">
-              <img width="98" height="98"
-              src="img/phone-square-4.jpg"
-              srcset="img/phone-square-4@2x.jpg 2x" alt="Название товара">
+            <a
+              class="pics__link"
+              href="#"
+            >
+              <img
+                width="98"
+                height="98"
+                src="img/phone-square-4.jpg"
+                srcset="img/phone-square-4@2x.jpg 2x"
+                alt="Название товара"
+              >
             </a>
           </li>
         </ul>
@@ -69,9 +100,13 @@
           {{ product.title }}
         </h2>
         <div class="item__form">
-          <form class="form" action="#" method="POST">
+          <form
+            class="form"
+            action="#"
+            method="POST"
+          >
             <b class="item__price">
-              {{ formatPrice }} ₽
+              {{ product.formatPrice }} ₽
             </b>
 
             <fieldset class="form__block">
@@ -79,26 +114,48 @@
               <ul class="colors">
                 <li class="colors__item">
                   <label class="colors__label">
-                    <input class="colors__radio sr-only" type="radio"
-                    name="color-item" value="blue" checked="">
-                    <span class="colors__value" style="background-color: #73B6EA;">
+                    <input
+                      class="colors__radio sr-only"
+                      type="radio"
+                      name="color-item"
+                      value="blue"
+                      checked=""
+                    >
+                    <span
+                      class="colors__value"
+                      style="background-color: #73B6EA;"
+                    >
                     </span>
                   </label>
                 </li>
                 <li class="colors__item">
                   <label class="colors__label">
-                    <input class="colors__radio sr-only" type="radio"
-                    name="color-item" value="yellow">
-                    <span class="colors__value" style="background-color: #FFBE15;">
+                    <input
+                      class="colors__radio sr-only"
+                      type="radio"
+                      name="color-item"
+                      value="yellow"
+                    >
+                    <span
+                      class="colors__value"
+                      style="background-color: #FFBE15;"
+                    >
                     </span>
                   </label>
                 </li>
                 <li class="colors__item">
                   <label class="colors__label">
-                    <input class="colors__radio sr-only" type="radio"
-                    name="color-item" value="gray">
-                    <span class="colors__value" style="background-color: #939393;">
-                  </span></label>
+                    <input
+                      class="colors__radio sr-only"
+                      type="radio"
+                      name="color-item"
+                      value="gray"
+                    >
+                    <span
+                      class="colors__value"
+                      style="background-color: #939393;"
+                    >
+                    </span></label>
                 </li>
               </ul>
             </fieldset>
@@ -109,7 +166,12 @@
               <ul class="sizes sizes--primery">
                 <li class="sizes__item">
                   <label class="sizes__label">
-                    <input class="sizes__radio sr-only" type="radio" name="sizes-item" value="32">
+                    <input
+                      class="sizes__radio sr-only"
+                      type="radio"
+                      name="sizes-item"
+                      value="32"
+                    >
                     <span class="sizes__value">
                       32gb
                     </span>
@@ -117,7 +179,12 @@
                 </li>
                 <li class="sizes__item">
                   <label class="sizes__label">
-                    <input class="sizes__radio sr-only" type="radio" name="sizes-item" value="64">
+                    <input
+                      class="sizes__radio sr-only"
+                      type="radio"
+                      name="sizes-item"
+                      value="64"
+                    >
                     <span class="sizes__value">
                       64gb
                     </span>
@@ -125,8 +192,13 @@
                 </li>
                 <li class="sizes__item">
                   <label class="sizes__label">
-                    <input class="sizes__radio sr-only" type="radio"
-                    name="sizes-item" value="128" checked="">
+                    <input
+                      class="sizes__radio sr-only"
+                      type="radio"
+                      name="sizes-item"
+                      value="128"
+                      checked=""
+                    >
                     <span class="sizes__value">
                       128gb
                     </span>
@@ -142,8 +214,9 @@
 
               <button
                 class="button button--primery"
-                @click.prevent="addToCart()"
-                :disabled="productAddingToCart">
+                @click.prevent="doAddToCart()"
+                :disabled="productAddingToCart"
+              >
                 В корзину
               </button>
 
@@ -162,17 +235,26 @@
             </a>
           </li>
           <li class="tabs__item">
-            <a class="tabs__link" href="#">
+            <a
+              class="tabs__link"
+              href="#"
+            >
               Характеристики
             </a>
           </li>
           <li class="tabs__item">
-            <a class="tabs__link" href="#">
+            <a
+              class="tabs__link"
+              href="#"
+            >
               Гарантия
             </a>
           </li>
           <li class="tabs__item">
-            <a class="tabs__link" href="#">
+            <a
+              class="tabs__link"
+              href="#"
+            >
               Оплата и доставка
             </a>
           </li>
@@ -223,85 +305,140 @@
 </template>
 
 <script>
-import axios from 'axios';
-import { mapActions } from 'vuex';
-import API_BASE_URL from '@/config';
-import formatNumber from '@/helpers/numberFormat';
+import { useStore } from 'vuex';
+import { defineComponent, ref } from 'vue';
 import ProductAddDeleteItem from '@/components/ProductAddDeleteItem.vue';
+import useProduct from '@/hooks/useProduct';
 
-export default {
+export default defineComponent({
+  components: {
+    ProductAddDeleteItem,
+  },
   props: {
     productId: {
       type: [Number, String],
       required: true,
     },
   },
-  components: { ProductAddDeleteItem },
-  data() {
+  setup(props) {
+    const $store = useStore();
+    const {
+      product, category, fetchProduct, status: productStatus,
+    } = useProduct();
+
+    const currentAmount = ref(1);
+    const productAddingToCart = ref(false);
+    const productAddedToCart = ref(false);
+    const isShowAddedMessage = ref(false);
+    const doAddToCart = () => {
+      productAddedToCart.value = false;
+      productAddingToCart.value = true;
+
+      $store
+        .dispatch('addProductToCart', { productId: product.value.id, amount: currentAmount.value })
+        .then(() => {
+          productAddedToCart.value = true;
+          productAddingToCart.value = false;
+          // isModalShown.value = true;
+        });
+    };
+
+    fetchProduct(props.productId);
+
     return {
-      currentAmount: 1,
-      productData: null,
+      currentAmount,
+      productStatus,
+      productAddingToCart,
+      productAddedToCart,
+      isShowAddedMessage,
 
-      loadingProduct: false,
-      loadingProductFailed: false,
+      product,
+      category,
 
-      productAddingToCart: false,
-      productAddedToCart: false,
+      doAddToCart,
     };
   },
-  computed: {
-    product() {
-      return this.productData;
-    },
-    category() {
-      return this.productData.category;
-    },
-    formatPrice() {
-      return formatNumber(this.product.price * this.currentAmount);
-    },
-  },
-  methods: {
-    ...mapActions(['addProductToCart']),
-    addToCart() {
-      this.productAddedToCart = false;
-      this.productAddingToCart = true;
+});
 
-      this.addProductToCart({ productId: this.product.id, amount: this.currentAmount })
-        .then(() => {
-          this.productAddedToCart = true;
-          this.productAddingToCart = false;
-          this.isModalShown = true;
-        });
-    },
-    loadProduct() {
-      this.loadingProduct = true;
-      this.loadingProductFailed = false;
-      clearTimeout(this.productTimer);
-      this.productTimer = setTimeout(() => {
-        axios.get(`${API_BASE_URL}/api/products/${this.productId}`)
-          .then((response) => { this.productData = response.data; })
-          .catch(() => { this.loadingProductFailed = true; })
-          .then(() => { this.loadingProduct = false; });
-      });
-    },
-  },
-  beforeRouteUpdated() {
-    this.loadProduct();
-  },
-  created() {
-    this.loadProduct();
-  },
-};
+// import axios from 'axios';
+// import { mapActions } from 'vuex';
+// import API_BASE_URL from '@/config';
+// import formatNumber from '@/helpers/numberFormat';
+// import ProductAddDeleteItem from '@/components/ProductAddDeleteItem.vue';
+
+// export default {
+//   props: {
+//     productId: {
+//       type: [Number, String],
+//       required: true,
+//     },
+//   },
+//   components: { ProductAddDeleteItem },
+//   data() {
+//     return {
+//       currentAmount: 1,
+//       productData: null,
+
+//       loadingProduct: false,
+//       loadingProductFailed: false,
+
+//       productAddingToCart: false,
+//       productAddedToCart: false,
+//     };
+//   },
+//   computed: {
+//     product() {
+//       return this.productData;
+//     },
+//     category() {
+//       return this.productData.category;
+//     },
+//     formatPrice() {
+//       return formatNumber(this.product.price * this.currentAmount);
+//     },
+//   },
+//   methods: {
+//     ...mapActions(['addProductToCart']),
+//     addToCart() {
+//       this.productAddedToCart = false;
+//       this.productAddingToCart = true;
+
+//       this.addProductToCart({ productId: this.product.id, amount: this.currentAmount })
+//         .then(() => {
+//           this.productAddedToCart = true;
+//           this.productAddingToCart = false;
+//           this.isModalShown = true;
+//         });
+//     },
+//     loadProduct() {
+//       this.loadingProduct = true;
+//       this.loadingProductFailed = false;
+//       clearTimeout(this.productTimer);
+//       this.productTimer = setTimeout(() => {
+//         axios.get(`${API_BASE_URL}/api/products/${this.productId}`)
+//           .then((response) => { this.productData = response.data; })
+//           .catch(() => { this.loadingProductFailed = true; })
+//           .then(() => { this.loadingProduct = false; });
+//       });
+//     },
+//   },
+//   beforeRouteUpdated() {
+//     this.loadProduct();
+//   },
+//   created() {
+//     this.loadProduct();
+//   },
+// };
 </script>
 
 <style scoped>
-  .item {
-    grid-template-columns: 1fr;
-  }
+.item {
+  grid-template-columns: 1fr;
+}
 
-  .pics__wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.pics__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 </style>
