@@ -5,6 +5,7 @@
   >
     <div
       class="modal"
+      :style="{top: modalTopCoords + 'px'}"
       @click="outsideDoClose"
     >
       <div
@@ -22,7 +23,9 @@
 </template>
 
 <script>
-import { defineComponent, ref, watch } from 'vue';
+import {
+  defineComponent, ref, watch,
+} from 'vue';
 import useModal from '@/hooks/useModal';
 
 export default defineComponent({
@@ -34,6 +37,7 @@ export default defineComponent({
 
   setup(props, { emit: $emit }) {
     const contentElement = ref(null);
+    const modalTopCoords = ref(0);
     const { doOpen, doClose } = useModal();
 
     const doCloseModal = () => {
@@ -47,12 +51,17 @@ export default defineComponent({
       }
     };
 
+    function getTopCoords() {
+      return window.scrollY;
+    }
+
     watch(
       () => props.open,
       (isOpen) => {
         if (!isOpen) {
           doClose();
         } else {
+          modalTopCoords.value = getTopCoords();
           doOpen();
         }
       },
@@ -62,46 +71,10 @@ export default defineComponent({
     return {
       outsideDoClose,
       doClose: doCloseModal,
+      modalTopCoords,
     };
   },
 });
-
-// export default {
-
-//   methods: {
-
-//     checkBlackoutState() {
-//       if (!openCount) {
-//         atLeastOpen = false;
-//         document.body.style.overflow = null;
-//         document.body.style.paddingRight = null;
-//       } else if (!atLeastOpen && openCount === 1) {
-//         atLeastOpen = true;
-//         document.body.style.overflow = 'hidden';
-//         document.body.style.paddingRight = `${window.innerWidth - document.body.clientWidth}px`;
-//       }
-//     },
-//   },
-//   watch: {
-//     open: {
-//       handler(isOpen) {
-//         if (isOpen) {
-//           openCount += 1;
-//         } else {
-//           openCount -= 1;
-//         }
-
-//         this.checkBlackoutState();
-//       },
-//     },
-//   },
-//   created() {
-//     if (this.open) {
-//       openCount += 1;
-//       this.checkBlackoutState();
-//     }
-//   },
-// };
 </script>
 
 <style>
@@ -125,6 +98,7 @@ export default defineComponent({
 
 .modal__body {
   /* transform: translateY(5%); */
+  position: relative;
 
   width: 70%;
   margin: auto;

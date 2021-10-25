@@ -14,6 +14,8 @@ export default function () {
     isFailed: false,
   });
 
+  const currentAmount = ref(1);
+
   const fetchProduct = (productId) => {
     fetchStatus.isLoading = true;
     fetchStatus.isFailed = false;
@@ -21,7 +23,7 @@ export default function () {
       .then((response) => {
         const product = response.data;
         productData.value = Object.assign(product, {
-          formatPrice: formatNumber(product.price),
+          formatPrice: formatNumber(product.price * currentAmount.value),
         });
       })
       .catch(() => { fetchStatus.isFailed = true; })
@@ -32,6 +34,8 @@ export default function () {
     product: productData,
     category,
     status: fetchStatus,
+    currentAmount,
+
     fetchProduct,
   };
 }

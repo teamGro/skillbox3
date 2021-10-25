@@ -4,26 +4,6 @@
     Ошибка при загрузке товара
   </div>
   <div v-else>
-    <div class="content__top">
-      <!-- <ul class="breadcrumbs">
-        <li class="breadcrumbs__item">
-          <router-link class="breadcrumbs__link" :to="{name: 'main'}">
-            Каталог
-          </router-link>
-        </li>
-        <li class="breadcrumbs__item">
-          <router-link class="breadcrumbs__link" :to="{name: 'main'}">
-            {{ category.title }}
-          </router-link>
-        </li>
-        <li class="breadcrumbs__item">
-          <a class="breadcrumbs__link">
-            {{ product.title }}
-          </a>
-        </li>
-      </ul> -->
-    </div>
-
     <section class="item">
       <div class="item__pics pics">
         <div class="pics__wrapper">
@@ -436,9 +416,19 @@ export default defineComponent({
   grid-template-columns: 1fr;
 }
 
+.pics {
+  display: flex;
+}
+
 .pics__wrapper {
   display: flex;
+  flex-grow: 2;
   align-items: center;
   justify-content: center;
+}
+
+.pics__list {
+  grid-template-rows: repeat(5, 1fr);
+  grid-template-columns: none;
 }
 </style>

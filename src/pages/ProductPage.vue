@@ -334,13 +334,12 @@ export default defineComponent({
     const $route = useRoute();
     const $store = useStore();
     const {
-      product, category, fetchProduct, status: productStatus,
+      product, category, fetchProduct, status: productStatus, currentAmount,
     } = useProduct();
 
-    const currentAmount = ref(1);
+    // const currentAmount = ref(1);
     const productAddingToCart = ref(false);
     const productAddedToCart = ref(false);
-    const isShowAddedMessage = ref(false);
     const doAddToCart = () => {
       productAddedToCart.value = false;
       productAddingToCart.value = true;
@@ -350,7 +349,6 @@ export default defineComponent({
         .then(() => {
           productAddedToCart.value = true;
           productAddingToCart.value = false;
-          // isModalShown.value = true;
         });
     };
 
@@ -361,7 +359,6 @@ export default defineComponent({
       productStatus,
       productAddingToCart,
       productAddedToCart,
-      isShowAddedMessage,
 
       product,
       category,
